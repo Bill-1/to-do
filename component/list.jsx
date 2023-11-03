@@ -1,12 +1,20 @@
 import Image from "next/image";
 import "./list.css";
 import { useState } from "react";
-const List = ({ name }) => {
-  const [text, setText] = useState(name);
+import { useList } from "@/provider/list.provider";
+const List = ({ index }) => {
+  const { list, setList } = useList();
+  const [text, setText] = useState(list[index].name);
   const [edit, setEdit] = useState(false);
   const Edit = (e) => {
     e.preventDefault();
     setEdit(!edit);
+    if (edit) {
+      const copy = [...list];
+      copy[index].name = text;
+      setList(copy);
+      console.log(list);
+    }
   };
   return (
     <div className="container">

@@ -4,9 +4,11 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import List from "../component/list";
 import { useState } from "react";
+import { useList } from "@/provider/list.provider";
 
 export default function Home() {
-  const [list, setList] = useState([{ name: "sda", status: "checked" }]);
+  const { list, setList } = useList();
+  // const [list, setList] = useState([])
   const [add, setAdd] = useState("");
 
   const handleSubmit = (e) => {
@@ -37,8 +39,8 @@ export default function Home() {
           />
         </form>
       </div>
-      {list.map(({ name, status }) => {
-        return <List name={name} status={status} />;
+      {list.map((_, index) => {
+        return <List key={index} index={index} />;
       })}
     </div>
   );
