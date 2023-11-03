@@ -4,31 +4,30 @@ import { useState } from "react";
 import { useList } from "@/provider/list.provider";
 const List = ({ index }) => {
   const { list, setList } = useList();
-  const [text, setText] = useState(list[index].name);
   const [edit, setEdit] = useState(false);
   const Edit = (e) => {
     e.preventDefault();
     setEdit(!edit);
-    if (edit) {
-      const copy = [...list];
-      copy[index].name = text;
-      setList(copy);
-      console.log(list);
-    }
+  };
+  const Delete = () => {
+    setEdit(false);
+    const arr = list.filter((_, i) => i != index);
+    setList(arr);
+  };
+  const UpdateName = (e) => {
+    const copy = [...list];
+    copy[index].name = e.target.value;
+    setList(copy);
   };
   return (
     <div className="container">
       <input type="checkbox" className="check-box" />
       {edit ? (
         <form onSubmit={Edit}>
-          <input
-            autoFocus
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
+          <input autoFocus value={list[index].name} onChange={UpdateName} />
         </form>
       ) : (
-        <div>{text}</div>
+        <div>{list[index].name}</div>
       )}
       <div className="icons">
         <Image
@@ -40,6 +39,7 @@ const List = ({ index }) => {
           height={20}
         />
         <Image
+          onClick={Delete}
           src="/delete.svg"
           alt="drag icon"
           className="image"
