@@ -13,15 +13,28 @@ const List = ({ index }) => {
     setEdit(false);
     const arr = list.filter((_, i) => i != index);
     setList(arr);
+    console.log(list);
+    console.log(arr);
   };
   const UpdateName = (e) => {
     const copy = [...list];
     copy[index].name = e.target.value;
     setList(copy);
   };
+  const UpdateStatus = (e) => {
+    const copy = [...list];
+    copy[index].status = !list[index].status;
+    setList(copy);
+    console.log(list);
+  };
   return (
     <div className="container">
-      <input type="checkbox" className="check-box" />
+      <input
+        type="checkbox"
+        className="check-box"
+        checked={list[index].status}
+        onChange={UpdateStatus}
+      />
       {edit ? (
         <form onSubmit={Edit}>
           <input autoFocus value={list[index].name} onChange={UpdateName} />

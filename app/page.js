@@ -10,12 +10,11 @@ export default function Home() {
   const { list, setList } = useList();
   // const [list, setList] = useState([])
   const [add, setAdd] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submitted!");
     const temp = [...list];
-    temp.push({ name: add });
+    temp.push({ name: add, status: false });
     setList(temp);
     setAdd("");
   };
